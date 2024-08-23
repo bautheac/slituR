@@ -1,4 +1,4 @@
 library(testthat)
-library(slitu)
+library(slituR)
 
-test_check("slitu")
+test_check("slituR")
