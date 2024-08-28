@@ -76,8 +76,6 @@ test_that(
   })
 
 
-
-
 # get_results ####
 tables <- tibble::tibble(analysis = c('mtcars', 'iris'), results = list(mtcars, iris))
 
@@ -141,10 +139,10 @@ test_that("style_html_table minimally styles html table correctly", {
 
 ## main ####
 test_that("style_table works as expected", {
-  table <- style_table(type = "latex", table = kableExtra::kbl(mtcars, format = "latex"))
+  table <- style_table(table = kableExtra::kbl(mtcars, format = "latex"), type = "latex")
   expect_equal(attributes(table)$format, "latex")
   expect_equal(attributes(table)$lightable_class, "lightable-paper")
-  table <- style_table(type = "html", table = kableExtra::kbl(mtcars, format = "html"))
+  table <- style_table(table = kableExtra::kbl(mtcars, format = "html"), type = "html")
   expect_equal(attributes(table)$format, "html")
   expect_equal(attributes(table)$lightable_class, "lightable-minimal")
 })
