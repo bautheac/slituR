@@ -93,3 +93,14 @@ style_table <- function(type, table){
 
   do.call(fun, list(table))
 }
+
+
+#' @export
+paste_forward_slash <- function(...) paste(..., sep = "/")
+
+
+#' @export
+library(purrr)
+
+make_series_of_repeated_chars <- function(char_list)
+  purrr::imap(char_list, ~ strrep(.y, .x)) %>% purrr::reduce(paste0)
