@@ -1,6 +1,6 @@
 Package: slituR
 Title: Author's custom R utils package
-Version: 0.0.1.1
+Version: 0.0.1.2
 Authors@R: 
     person("Olivier", "Bautheac", , "o.bautheac@gmail.com", role = c("aut", "cre"))
 Author: Olivier Bautheac [aut, cre]
@@ -14,6 +14,6 @@ Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Imports: 
-    kableExtra (>= 1.3.4),  
+    kableExtra (>= 1.3.4),
     purrr (>= 1.0.2)
     
