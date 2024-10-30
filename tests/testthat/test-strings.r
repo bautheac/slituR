@@ -1,10 +1,10 @@
-# paste_forward_slash ####
+# paste_forward_slash ##########################################################
 test_that("paste_forward_slash works as expected", {
   expect_equal(paste_forward_slash("test", "test"), "test/test")
 })
 
 
-# make_series_of_repeated_chars ####
+# make_series_of_repeated_chars ################################################
 test_that("make_series_of_repeated_chars works as expected", {
   chars <- "lllrrrrllcc"
   expect_equal(
@@ -14,4 +14,10 @@ test_that("make_series_of_repeated_chars works as expected", {
   expect_equal(
     make_series_of_repeated_chars(list(l = 2L, r = 4L, l = 3L, c = 2L)), chars
     )
+})
+
+# percentize ###################################################################
+test_that("percentize works as expected", {
+  expect_equal(percentize(0.1), "10%")
+  expect_equal(percentize(c(0.1, 0.05)), c("10%", "5%"))
 })

@@ -8,3 +8,6 @@ make_series_of_repeated_chars <- function(char_list){
   series_string <- purrr::reduce(series_list, paste0)
   return(series_string)
 }
+
+#' @export
+percentize <- function(value) paste0(round(value, digits = 4L) * 100, "%")
