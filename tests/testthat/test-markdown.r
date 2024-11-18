@@ -225,6 +225,22 @@ test_that("collapse_rows works as expected", {
       espalloc = c(c("espalloc", rep("", n - 1L)), c("collapse", rep("", n - 1L)))
     )
     expect_equal(collapse_rows(original, c("collapse", "espalloc")), expected)
+  })
+
+
+  test_that("whenSequentialGroupsShowSameValue_RepeatsFirstRow", {
+    n <- 5L
+    original <- tibble::tibble(
+      collapse = c(rep("collapse", n), rep("espalloc", n)),
+      espalloc = c(rep("collapse", n + 3L), rep("espalloc", n - 3L))
+    )
+    expected <- tibble::tibble(
+      collapse = c(c("collapse", rep("", n - 1L)), c("espalloc", rep("", n - 1L))),
+      espalloc = c(
+        c("collapse", rep("", n - 1L)), c("collapse", rep("", 2L)), c("espalloc", "")
+        )
+    )
+    expect_equal(collapse_rows(original, c("collapse", "espalloc")), expected)
 
   })
 })

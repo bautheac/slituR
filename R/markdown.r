@@ -134,11 +134,22 @@ collapse_rows_in_all_columns <- function(df){
   }
   return(df)
 }
+extract_last_value <- function(vector) vector[NROW(vector)]
+collapse_rows_in_last_column_named <- function(df, column_names){
+  collapse_column_name <- extract_last_value(column_names)
+  dplyr::group_by(df, !!!rlang::syms(column_names)) %>%
+    dplyr::mutate(
+      !!collapse_column_name :=
+        blank_sequentially_repeated_values(!!rlang::sym(collapse_column_name))
+    ) %>%
+    dplyr::ungroup()
+}
 collapse_rows_in_named_columns <- function(df, column_names){
-  dplyr::mutate(
-    df,
-    dplyr::across(all_of(column_names), ~ blank_sequentially_repeated_values(.))
-  )
+
+  for(i in NROW(column_names):1L){
+    df <- collapse_rows_in_last_column_named(df, column_names[1L:i])
+  }
+  return(df)
 }
 ## main ########################################################################
 #' @export
