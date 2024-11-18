@@ -2,6 +2,7 @@
 
 export(caption_html)
 export(caption_latex)
+export(collapse_rows)
 export(floor_to_nearest_multiple)
 export(floor_year_to_nearest_decade)
 export(get_results)

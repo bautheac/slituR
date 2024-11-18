@@ -1,9 +1,9 @@
 
-# caption_latex ####
+# caption_latex ################################################################
 
-## helpers ####
+## helpers #####################################################################
 
-### escape_percentage_sign_before_numbers_in_latex ####
+### escape_percentage_sign_before_numbers_in_latex #############################
 test_that(
   "escape_percentage_sign_before_numbers_in_latex escapes % sign before numbers correctly",
   {
@@ -12,20 +12,20 @@ test_that(
   expect_equal(escape_percentage_sign_before_numbers_in_latex("100%"), "100\\%")
   }
 )
-### escape_ampersand_sign_in_latex ####
+### escape_ampersand_sign_in_latex #############################################
 test_that("escape_ampersand_sign_in_latex escapes & sign correctly", {
   expect_equal(escape_ampersand_sign_in_latex("done & dusted"), "done \\& dusted")
 })
-### unescape_star_sign_in_latex ####
+### unescape_star_sign_in_latex ################################################
 test_that("unescape_star_sign_in_latex unescapes * sign correctly", {
   expect_equal(unescape_star_sign_in_latex("\\*"), "*")
 })
-### parse_references_in_latex ####
+### parse_references_in_latex ##################################################
 test_that("parse_references_in_latex parses references into latex format correctly", {
   expect_equal(parse_references_in_latex("\\@ref(slituR)"), "\\ref{slituR}")
 })
 
-## main ####
+## main ########################################################################
 test_that(
   "parse_table_caption_for_latex_output escapes works correctly", {
   expect_equal(
@@ -39,30 +39,30 @@ test_that(
 })
 
 
-# caption_html ####
+# caption_html #################################################################
 
-## helpers ####
+## helpers #####################################################################
 
-### escape_percentage_sign_before_numbers_in_html ####
+### escape_percentage_sign_before_numbers_in_html ##############################
 test_that("escape_percentage_sign_before_numbers_in_html unescapes % sign before numbers correctly", {
   expect_equal(escape_percentage_sign_before_numbers_in_html("1\\%"), "1%")
   expect_equal(escape_percentage_sign_before_numbers_in_html("10\\%"), "10%")
   expect_equal(escape_percentage_sign_before_numbers_in_html("100\\%"), "100%")
 })
-### escape_ampersand_sign_in_html ####
+### escape_ampersand_sign_in_html ##############################################
 test_that("escape_ampersand_sign_in_html unescapes & sign correctly", {
   expect_equal(escape_ampersand_sign_in_html("done \\& dusted"), "done & dusted")
 })
-### unescape_star_sign_in_html ####
+### unescape_star_sign_in_html #################################################
 test_that("unescape_star_sign_in_html escapes * sign correctly", {
   expect_equal(unescape_star_sign_in_html("*"), "\\*")
 })
-### parse_references_in_html ####
+### parse_references_in_html ###################################################
 test_that("parse_references_in_html parses references into latex format correctly", {
   expect_equal(parse_references_in_html("\\ref{slitu}"), "\\@ref(slitu)")
 })
 
-## main ####
+## main ########################################################################
 test_that(
   "parse_table_caption_for_html_output escapes works correctly", {
     expect_equal(
@@ -76,12 +76,12 @@ test_that(
   })
 
 
-# get_results ####
+# get_results ##################################################################
 tables <- tibble::tibble(analysis = c('mtcars', 'iris'), results = list(mtcars, iris))
 
-## helpers ####
+## helpers #####################################################################
 
-### check_if_no_table_found ####
+### check_if_no_table_found ####################################################
 test_that("check_if_no_table_found prints message and returns null when specified analysis doesn't exists", {
   results <- tibble::tibble(); analysis <- "test"
   message <- paste0("No table found for analysis: ", analysis)
@@ -89,7 +89,7 @@ test_that("check_if_no_table_found prints message and returns null when specifie
   expect_equal(check_if_no_table_found(results, analysis), NULL)
 })
 
-### check_if_multiple_tables_found ####
+### check_if_multiple_tables_found #############################################
 test_that("check_if_multiple_tables_found prints message and returns null when specified analysis doesn't exists", {
   tables <- dplyr::bind_rows(tables, tables)
   analysis <- "iris"
@@ -98,7 +98,7 @@ test_that("check_if_multiple_tables_found prints message and returns null when s
   expect_equal(check_if_multiple_tables_found(tables, analysis), NULL)
 })
 
-## main ####
+## main ########################################################################
 test_that("get_results retrieves existing results table correctly", {
   expect_equal(get_results(tables, 'mtcars'), mtcars)
   expect_equal(get_results(tables, 'iris'), iris)
@@ -120,11 +120,11 @@ test_that("get_results prints message and returns null when multiple tables foun
 })
 
 
-# style_table ####
+# style_table ##################################################################
 
-## helpers ####
+## helpers #####################################################################
 
-### style_latex_table ####
+### style_latex_table ##########################################################
 test_that("style_latex_table paper styles latex table correctly", {
   table <- style_latex_table(table = kableExtra::kbl(mtcars, format = "latex"))
   expect_equal(attributes(table)$format, "latex")
@@ -137,7 +137,7 @@ test_that("style_html_table minimally styles html table correctly", {
   expect_equal(attributes(table)$lightable_class, "lightable-minimal")
 })
 
-## main ####
+## main ########################################################################
 test_that("style_table works as expected", {
   table <- style_table(table = kableExtra::kbl(mtcars, format = "latex"), type = "latex")
   expect_equal(attributes(table)$format, "latex")
@@ -148,13 +148,13 @@ test_that("style_table works as expected", {
 })
 
 
-# paste_forward_slash ####
+# paste_forward_slash ##########################################################
 test_that("paste_forward_slash works as expected", {
   expect_equal(paste_forward_slash("test", "test"), "test/test")
 })
 
 
-# make_series_of_repeated_chars ####
+# make_series_of_repeated_chars ################################################
 test_that("make_series_of_repeated_chars works as expected", {
   chars <- "lllrrrrllcc"
   expect_equal(
@@ -164,4 +164,67 @@ test_that("make_series_of_repeated_chars works as expected", {
   expect_equal(
     make_series_of_repeated_chars(list(l = 2L, r = 4L, l = 3L, c = 2L)), chars
     )
+})
+
+
+# collapse rows ################################################################
+
+test_that("collapse_rows works as expected", {
+
+  expect_true(exists("collapse_rows"))
+
+
+
+  test_that("whenPassedOneColumnDataframeWithOneLevel_ReturnsDataframeWithCollapsedRows", {
+    n <- 10L
+    original <- tibble::tibble(collapse = rep("collapse", n))
+    expected <- tibble::tibble(collapse = c("collapse", rep("", n - 1L)))
+    expect_equal(collapse_rows(original), expected)
+  })
+
+  test_that("whenPassedOneColumnDataframeWithTwoLevels_ReturnsDataframeWithCollapsedRows", {
+    n <- 5L
+    original <- tibble::tibble(collapse = c(rep("collapse", n), rep("espalloc", n)))
+    expected <- tibble::tibble(collapse = c(c("collapse", rep("", n - 1L)), c("espalloc", rep("", n - 1L))))
+    expect_equal(collapse_rows(original), expected)
+  })
+
+  test_that("whenPassedTwoColumnDataframeWithTwoLevels_ReturnsDataframeWithCollapsedRows", {
+    n <- 5L
+    original <- tibble::tibble(
+      collapse = c(rep("collapse", n), rep("espalloc", n)),
+      espalloc = c(rep("espalloc", n), rep("collapse", n))
+      )
+    expected <- tibble::tibble(
+      collapse = c(c("collapse", rep("", n - 1L)), c("espalloc", rep("", n - 1L))),
+      espalloc = c(c("espalloc", rep("", n - 1L)), c("collapse", rep("", n - 1L)))
+      )
+    expect_equal(collapse_rows(original), expected)
+  })
+
+  test_that("whenPassedColumnNames_collapsesRowsOfCorrectColumns", {
+    n <- 5L
+    original <- tibble::tibble(
+      collapse = c(rep("collapse", n), rep("espalloc", n)),
+      espalloc = c(rep("espalloc", n), rep("collapse", n))
+    )
+    expected <- tibble::tibble(
+      collapse = c(rep("collapse", n), rep("espalloc", n)),
+      espalloc = c(c("espalloc", rep("", n - 1L)), c("collapse", rep("", n - 1L)))
+    )
+    expect_equal(collapse_rows(original, "espalloc"), expected)
+
+    expected <- tibble::tibble(
+      collapse = c(c("collapse", rep("", n - 1L)), c("espalloc", rep("", n - 1L))),
+      espalloc = c(rep("espalloc", n), rep("collapse", n))
+    )
+    expect_equal(collapse_rows(original, "collapse"), expected)
+
+    expected <- tibble::tibble(
+      collapse = c(c("collapse", rep("", n - 1L)), c("espalloc", rep("", n - 1L))),
+      espalloc = c(c("espalloc", rep("", n - 1L)), c("collapse", rep("", n - 1L)))
+    )
+    expect_equal(collapse_rows(original, c("collapse", "espalloc")), expected)
+
+  })
 })
