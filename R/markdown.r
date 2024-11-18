@@ -119,6 +119,8 @@ make_series_of_repeated_chars <- function(char_list)
 make_integer_sequence <- function(start, end) start:end
 extract_column_values <- function(df, column_index) df[[column_index]]
 blank_sequentially_repeated_values <- function(values){
+  if(NROW(values) %in% c(0L, 1L)) return(values)
+
   reference <- values[1L]
   for (i in make_integer_sequence(2L, NROW(values))) {
     value <- values[i]
@@ -127,11 +129,7 @@ blank_sequentially_repeated_values <- function(values){
   return(values)
 }
 collapse_rows_in_all_columns <- function(df){
-  for (i in 1L:NCOL(df)) {
-    column_values <- extract_column_values(df, i)
-    collapsed_column_values <- blank_sequentially_repeated_values(column_values)
-    df[[i]] <- collapsed_column_values
-  }
+  df <- collapse_rows_in_named_columns(df, colnames(df))
   return(df)
 }
 extract_last_value <- function(vector) vector[NROW(vector)]
