@@ -32,3 +32,12 @@ test_that(
     condition <- original$c == 4L
     expect_equal(invert_columns_on_condition(original, "a", "c", condition), expected)
   })
+
+test_that(
+  "invert_columns_on_condition handles NAs correctly", {
+
+    original <- data.frame(a = c(3L, NA, 1L), b = c(1L, NA, 3L), c = c(4L, 5L, 6L))
+    expected <- data.frame(a = c(4L, NA, 1L), b = c(1L, NA, 3L), c = c(3L, 5L, 6L))
+    condition <- original$c == 4L
+    expect_equal(invert_columns_on_condition(original, "a", "c", condition), expected)
+  })
